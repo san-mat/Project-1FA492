@@ -1,0 +1,98 @@
+% --- Pin-cell burnup calculation ----------------------------
+
+set title "Pin-cell burnup calculation"
+
+% --- Pin definition:
+
+pin 1
+fuel   0.569
+clad   0.6343
+coolant
+
+% --- Geometry:
+
+surf 1  hexxc 0.0 0.0 0.7819
+
+cell 1  0  fill  1  -1
+cell 2  0  outside   1
+
+% --- Fuel (composition given in atomic densities):
+
+include fuel.txt
+
+% --- Zircalloy cladding:
+
+mat clad   -6.560
+40000.06c  -0.9791
+50000.06c  -0.0159
+26000.06c  -0.0050
+
+% --- Sodium (composition given in atomic densities):
+
+mat coolant     -0.874 
+11023.06c	1
+
+
+
+
+% --- Cross section library file path:
+
+set acelib "/xs/sss_endfb7u.xsdata"
+
+% --- Periodic boundary condition:
+
+set bc 2
+
+% --- Neutron population and criticality cycles:
+
+set pop 5000 100 20
+
+% --- Geometry and mesh plots:
+
+% plot 3 500 500 [-3 3 -6 6]
+% mesh 3 500 500
+
+% --- Decay and fission yield libraries:
+
+set declib "/usr/local/SERPENT/endf-b-vi-8_decay.dat"
+set nfylib "/usr/local/SERPENT/endf-b-vi-8_nfpy.dat"
+set acelib "/home/elter/jeff31.xsdata"
+
+% --- Depletion steps:
+
+% Irradiation + Cooling cycle 1
+set powdens 27.441e-3
+dep bustep
+2.5
+5.0
+5.0
+5.0
+5.0
+5.0
+5.0
+5.0
+5.0
+5.0
+5.0
+5.0
+5.0
+7.5
+
+
+set powdens 0
+%set pop 0 0 0
+
+dep decstep
+1
+3
+10
+30
+100
+300
+1381
+
+set printm 1 %print bumat files
+
+%run a subsequent gamma transport calculation to get list of gamma peaks in the fuel. Produces _gsrc.m file
+set inventory all
+

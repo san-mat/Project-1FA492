@@ -13,7 +13,7 @@ into the empty directory. The fuel is then recycled according to the parameters 
 -----------------------------------
 **Recycling**
 
-Important input parameters to *recycle*
+Important input parameters to *Code.recycle*
 
 - TRU_enr: sets fraction of TRU in fuel
 - U235_enr: sets fraction of U235 in fuel
@@ -21,7 +21,8 @@ Important input parameters to *recycle*
 - exclude_isotopes: Exclude recycling of list of isotopes inside the recycling range
 - Temp: Overwrite temperature from *SNF_LWR*. can be '09c', '12c', '15c', '18c'
 
-If left to default values, the code will only set density and remove fission products and uranium decay chain isotopes.
+If left to default values, the code will only set density and remove fission products, minor actinides and decay chain isotopes.
+It will then not alter any isotopic fractions.
 
 Output of the recycling code is saved in binary .npy files. They can be opened with numpy for analysis.
 
